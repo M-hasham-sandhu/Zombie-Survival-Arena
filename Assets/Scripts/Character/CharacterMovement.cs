@@ -9,7 +9,7 @@ public class CharacterMovement : MonoBehaviour
     public FixedJoystick joystick;
     [SerializeField] private LayerMask nonWalkableLayer;
     [SerializeField] private Animator animator;
-    
+
      [SerializeField] private Rigidbody rb;
 
     [Header("Movement Settings")]
@@ -17,11 +17,26 @@ public class CharacterMovement : MonoBehaviour
     public float rotationSpeed = 120f;
     public float obstacleCheckDistance = 1f;
 
-   
+
+    private void Awake()
+    {
+       
+    }
 
     private void FixedUpdate()
     {
         HandleMovement();
+    }
+
+    private void Update()
+    {
+        // Debug: Press D to trigger die animation
+        if (Input.GetKeyDown(KeyCode.D) && animator != null)
+        {
+            animator.ResetTrigger("walk");
+            animator.ResetTrigger("idle");
+            animator.SetTrigger("die");
+        }
     }
 
     private void HandleMovement()
