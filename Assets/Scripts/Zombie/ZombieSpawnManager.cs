@@ -15,9 +15,6 @@ public class ZombieSpawnManager : MonoBehaviour
     [Tooltip("How many more zombies to add each wave.")]
     public int zombiesPerWaveIncrement = 2;
 
-    [Header("Enemy Settings")]
-    public GameObject zombiePrefab;
-
     [Header("Spawn Points")]
     public List<Transform> spawnPoints;
 
@@ -25,14 +22,14 @@ public class ZombieSpawnManager : MonoBehaviour
     [Tooltip("Reference to the player transform.")]
     public Transform player;
 
+
     private int currentWave = 0;
-    private bool spawning = false;
 
     private void Start()
     {
-        if (zombiePrefab == null)
+        if (ObjectPooler.Instance == null)
         {
-            Debug.LogError("Zombie prefab not assigned to ZombieSpawnManager!");
+            Debug.LogError("ZombieSpawnManager: ObjectPooler singleton instance not found!");
             enabled = false;
             return;
         }
@@ -84,7 +81,9 @@ public class ZombieSpawnManager : MonoBehaviour
             Debug.LogWarning("No valid spawn point found for zombie!");
             return;
         }
-        GameObject zombie = Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject zombie = ObjectPooler.Instance.GetZombie();
+        zombie.transform.position = spawnPoint.position;
+        zombie.transform.rotation = spawnPoint.rotation;
         // Assign player as target if possible
         var zombieMovement = zombie.GetComponent<ZombieMovement>();
         if (zombieMovement != null && player != null)
