@@ -2059,7 +2059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae285334c56c8eb4590b0ce0ef99d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   target: {fileID: 0}
+  detectionRadius: 10
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
   attackRange: 2
 --- !u!1 &7290581473196043927
 GameObject:

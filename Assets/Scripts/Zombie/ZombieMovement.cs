@@ -39,10 +39,12 @@ public class ZombieMovement : MonoBehaviour
         {
             target = hits[0].transform;
         }
-        else
-        {
-            target = null;
-        }
+        // else: do not clear target if already set externally (e.g., by spawner)
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 
     private void HandleMovement()
