@@ -37825,6 +37825,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3211786258947776381, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 4310616240312158176, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
       propertyPath: m_Center.y
       value: 0.88
