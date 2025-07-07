@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ZombieSpawnManager : MonoBehaviour
 {
-    [Header("Wave Settings")]
+    [Header("Wave Settings, Delays in seconds")]
     [Tooltip("Delay before the first wave starts.")]
     public float initialDelay = 2f;
     [Tooltip("Time between waves.")]
@@ -38,6 +38,21 @@ public class ZombieSpawnManager : MonoBehaviour
             Debug.LogError("No spawn points assigned to ZombieSpawnManager!");
             enabled = false;
             return;
+        }
+        foreach (var sp in spawnPoints)
+        {
+            if (sp == null) continue;
+            UnityEngine.AI.NavMeshHit hit;
+            if (UnityEngine.AI.NavMesh.SamplePosition(sp.position, out hit, 2f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                Vector3 aligned = sp.position;
+                aligned.y = hit.position.y;
+                sp.position = aligned;
+            }
+            else
+            {
+                Debug.LogWarning($"Spawn point {sp.name} at {sp.position} is not near the NavMesh!");
+            }
         }
         if (player == null)
         {
@@ -77,14 +92,17 @@ public class ZombieSpawnManager : MonoBehaviour
     {
         Transform spawnPoint = GetRandomSpawnPoint();
         if (spawnPoint == null)
-        {
-            Debug.LogWarning("No valid spawn point found for zombie!");
             return;
-        }
+
         GameObject zombie = ObjectPooler.Instance.GetZombie();
         zombie.transform.position = spawnPoint.position;
         zombie.transform.rotation = spawnPoint.rotation;
-        // Assign player as target if possible
+        var agent = zombie.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.enabled = true;
+        }
+        
         var zombieMovement = zombie.GetComponent<ZombieMovement>();
         if (zombieMovement != null && player != null)
         {

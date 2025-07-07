@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour
 {
+    
     [Header("References")]
     public FixedJoystick joystick;
     [SerializeField] private LayerMask nonWalkableLayer;
@@ -82,6 +83,19 @@ public class CharacterMovement : MonoBehaviour
         float castDistance = obstacleCheckDistance;
 
         return Physics.SphereCast(rayOrigin, sphereRadius, transform.forward, out RaycastHit hit, castDistance, nonWalkableLayer);
+    }
+
+    /// <summary>
+    /// Rotates the player to face the camera's Y direction (used for camera aiming alignment).
+    /// </summary>
+    public void AlignToCameraY(Transform cameraTransform, float alignSpeed = 720f)
+    {
+        if (cameraTransform == null) return;
+        Vector3 camForward = cameraTransform.forward;
+        camForward.y = 0f;
+        if (camForward.sqrMagnitude < 0.01f) return;
+        Quaternion targetRot = Quaternion.LookRotation(camForward);
+        rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRot, alignSpeed * Time.fixedDeltaTime));
     }
 
     private void OnDrawGizmosSelected()

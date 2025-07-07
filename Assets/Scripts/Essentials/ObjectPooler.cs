@@ -29,7 +29,13 @@ public class ObjectPooler : MonoBehaviour
         }
         for (int i = 0; i < initialSize; i++)
         {
-            GameObject obj = Instantiate(zombiePrefab);
+            GameObject obj = Instantiate(zombiePrefab, transform);
+            // Disable NavMeshAgent to avoid warning
+            var agent = obj.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = false;
+            }
             obj.SetActive(false);
             zombiePool.Enqueue(obj);
         }
@@ -47,7 +53,13 @@ public class ObjectPooler : MonoBehaviour
         }
         else
         {
-            obj = Instantiate(zombiePrefab);
+            obj = Instantiate(zombiePrefab, transform);
+            // Disable NavMeshAgent to avoid warning
+            var agent = obj.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = false;
+            }
         }
         obj.SetActive(true);
         return obj;
