@@ -72,7 +72,6 @@ public class ZombieSpawnManager : MonoBehaviour
         {
             currentWave++;
             int zombiesThisWave = baseZombiesPerWave + zombiesPerWaveIncrement * (currentWave - 1);
-            Debug.Log($"Spawning wave {currentWave} with {zombiesThisWave} zombies.");
             yield return StartCoroutine(SpawnWave(zombiesThisWave));
             Debug.Log($"Wave {currentWave} complete. Next wave in {timeBetweenWaves} seconds.");
             yield return new WaitForSeconds(timeBetweenWaves);

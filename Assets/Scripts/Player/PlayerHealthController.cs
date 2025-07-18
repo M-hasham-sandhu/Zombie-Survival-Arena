@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerHealthController : MonoBehaviour
 {
     [SerializeField] private HealthManager healthManager;
+    public HealthManager HealthManager => healthManager;
 
     private void Awake()
     {

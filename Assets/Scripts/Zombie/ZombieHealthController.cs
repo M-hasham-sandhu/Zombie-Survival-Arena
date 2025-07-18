@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class ZombieHealthController : MonoBehaviour
 {
     [SerializeField] private HealthManager healthManager;
@@ -18,9 +17,15 @@ public class ZombieHealthController : MonoBehaviour
 
     private void OnZombieDeath()
     {
-        // Return zombie to pool
-        Debug.Log($"Zombie {name} died, returning to pool.");
         healthManager.ResetHealth();
         ObjectPooler.Instance.ReturnZombie(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            healthManager.TakeDamage(50);
+        }
     }
 }

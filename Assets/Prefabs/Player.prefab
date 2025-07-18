@@ -132,8 +132,9 @@ Transform:
   - {fileID: 2121227903622050495}
   - {fileID: 5145764849736699942}
   - {fileID: 2834191803557663107}
+  - {fileID: 7770543258327867940}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1465606561887410385
 Animator:
@@ -224,7 +225,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 1465606561887410385}
   rb: {fileID: 3211786258947776381}
-  moveSpeed: 10
+  moveSpeed: 5
   rotationSpeed: 100
   obstacleCheckDistance: 1
 --- !u!114 &-8072275889674660814
@@ -889,6 +890,37 @@ Transform:
   m_Children:
   - {fileID: 3404228652001437754}
   m_Father: {fileID: 2696476251770259248}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4038569895877735860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7770543258327867940}
+  m_Layer: 7
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7770543258327867940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038569895877735860}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 592766818089099896}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4043329139025155707
