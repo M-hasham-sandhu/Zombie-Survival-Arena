@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Zombie
   - Bullet
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX

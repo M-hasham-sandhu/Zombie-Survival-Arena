@@ -15,13 +15,8 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int initialBulletSize = 20;
 
-    [Header("PowerUp Pool Settings")]
-    [SerializeField] private GameObject powerUpPrefab;
-    [SerializeField] private int initialPowerUpSize = 5;
-
     private readonly Queue<GameObject> zombiePool = new Queue<GameObject>();
     private readonly Queue<GameObject> bulletPool = new Queue<GameObject>();
-    private readonly Queue<GameObject> powerUpPool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -73,21 +68,6 @@ public class ObjectPooler : MonoBehaviour
                 }
                 obj.SetActive(false);
                 bulletPool.Enqueue(obj);
-            }
-        }
-
-        // PowerUp pool initialization
-        if (powerUpPrefab == null)
-        {
-            Debug.LogWarning("ObjectPooler: PowerUp prefab not assigned!");
-        }
-        else
-        {
-            for (int i = 0; i < initialPowerUpSize; i++)
-            {
-                GameObject obj = Instantiate(powerUpPrefab, transform);
-                obj.SetActive(false);
-                powerUpPool.Enqueue(obj);
             }
         }
     }
@@ -147,26 +127,5 @@ public class ObjectPooler : MonoBehaviour
     {
         obj.SetActive(false);
         bulletPool.Enqueue(obj);
-    }
-
-    public GameObject GetPowerUp()
-    {
-        GameObject obj;
-        if (powerUpPool.Count > 0)
-        {
-            obj = powerUpPool.Dequeue();
-        }
-        else
-        {
-            obj = Instantiate(powerUpPrefab, transform);
-        }
-        obj.SetActive(true);
-        return obj;
-    }
-
-    public void ReturnPowerUp(GameObject obj)
-    {
-        obj.SetActive(false);
-        powerUpPool.Enqueue(obj);
     }
 }

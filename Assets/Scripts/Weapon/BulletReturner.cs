@@ -6,7 +6,8 @@ public class BulletReturner : MonoBehaviour
     private float timer = 0f;
     private bool active = false;
 
-    [SerializeField] private Rigidbody rb; 
+    [SerializeField] private Rigidbody rb;
+    public float damage = 50f; // Set by ShootManager when bullet is spawned
 
     private void Awake()
     {
@@ -14,12 +15,12 @@ public class BulletReturner : MonoBehaviour
             rb = GetComponent<Rigidbody>();
     }
 
-   
-    public void Init(float timeToLive)
+    public void Init(float timeToLive, float bulletDamage)
     {
         ttl = timeToLive;
         timer = 0f;
         active = true;
+        damage = bulletDamage;
     }
 
     private void OnEnable()
@@ -45,9 +46,14 @@ public class BulletReturner : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {   
+    {
         if (other.CompareTag("Zombie"))
         {
+            var zombieHealth = other.GetComponent<ZombieHealthController>();
+            if (zombieHealth != null && zombieHealth.healthManager != null)
+            {
+                zombieHealth.healthManager.TakeDamage(damage);
+            }
             ReturnToPool();
         }
     }

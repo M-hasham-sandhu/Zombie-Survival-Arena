@@ -8,6 +8,8 @@ public class ShootManager : MonoBehaviour
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float bulletTTL = 2f;
 
+    public float bulletDamage = 50f; // Default bullet damage
+
     private void Start()
     {
         InvokeRepeating(nameof(Shoot), 0f, 0.5f);
@@ -43,7 +45,7 @@ public class ShootManager : MonoBehaviour
         BulletReturner returner = bullet.GetComponent<BulletReturner>();
         if (returner != null)
         {
-            returner.Init(bulletTTL);
+            returner.Init(bulletTTL, bulletDamage);
         }
     }
 }

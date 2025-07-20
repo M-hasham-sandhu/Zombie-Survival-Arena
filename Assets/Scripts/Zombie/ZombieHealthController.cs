@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ZombieHealthController : MonoBehaviour
 {
-    [SerializeField] private HealthManager healthManager;
+    [SerializeField] public HealthManager healthManager;
 
     private void Awake()
     {
@@ -19,13 +19,5 @@ public class ZombieHealthController : MonoBehaviour
     {
         healthManager.ResetHealth();
         ObjectPooler.Instance.ReturnZombie(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bullet"))
-        {
-            healthManager.TakeDamage(50);
-        }
     }
 }

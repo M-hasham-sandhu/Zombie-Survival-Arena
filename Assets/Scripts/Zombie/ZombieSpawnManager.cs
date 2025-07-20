@@ -74,6 +74,10 @@ public class ZombieSpawnManager : MonoBehaviour
             int zombiesThisWave = baseZombiesPerWave + zombiesPerWaveIncrement * (currentWave - 1);
             yield return StartCoroutine(SpawnWave(zombiesThisWave));
             Debug.Log($"Wave {currentWave} complete. Next wave in {timeBetweenWaves} seconds.");
+            if (PowerUpManager.Instance != null)
+            {
+                PowerUpManager.Instance.SpawnPowerUpsForWave();
+            }
             yield return new WaitForSeconds(timeBetweenWaves);
         }
     }
