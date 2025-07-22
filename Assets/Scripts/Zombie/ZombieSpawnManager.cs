@@ -29,13 +29,11 @@ public class ZombieSpawnManager : MonoBehaviour
     {
         if (ObjectPooler.Instance == null)
         {
-            Debug.LogError("ZombieSpawnManager: ObjectPooler singleton instance not found!");
             enabled = false;
             return;
         }
         if (spawnPoints == null || spawnPoints.Count == 0)
         {
-            Debug.LogError("No spawn points assigned to ZombieSpawnManager!");
             enabled = false;
             return;
         }
@@ -51,7 +49,6 @@ public class ZombieSpawnManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"Spawn point {sp.name} at {sp.position} is not near the NavMesh!");
             }
         }
         if (player == null)
@@ -60,7 +57,8 @@ public class ZombieSpawnManager : MonoBehaviour
             if (playerObj != null)
                 player = playerObj.transform;
             else
-                Debug.LogWarning("ZombieSpawnManager: Player reference not set and no object with tag 'Player' found.");
+            {
+            }
         }
         StartCoroutine(WaveSpawnerCoroutine());
     }

@@ -30,7 +30,6 @@ public class ObjectPooler : MonoBehaviour
         // Zombie pool initialization
         if (zombiePrefab == null)
         {
-            Debug.LogError("ObjectPooler: Zombie prefab not assigned!");
             enabled = false;
             return;
         }
@@ -39,7 +38,6 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = Instantiate(zombiePrefab, transform);
             if (!obj.CompareTag("Zombie"))
             {
-                Debug.LogWarning($"ObjectPooler: Instantiated zombie does not have 'Zombie' tag. Assigning now.");
                 obj.tag = "Zombie";
             }
             var agent = obj.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -54,7 +52,6 @@ public class ObjectPooler : MonoBehaviour
         // Bullet pool initialization
         if (bulletPrefab == null)
         {
-            Debug.LogWarning("ObjectPooler: Bullet prefab not assigned!");
         }
         else
         {
@@ -63,7 +60,6 @@ public class ObjectPooler : MonoBehaviour
                 GameObject obj = Instantiate(bulletPrefab, transform);
                 if (!obj.CompareTag("Bullet"))
                 {
-                    Debug.LogWarning($"ObjectPooler: Instantiated bullet does not have 'Bullet' tag. Assigning now.");
                     obj.tag = "Bullet";
                 }
                 obj.SetActive(false);
@@ -84,7 +80,6 @@ public class ObjectPooler : MonoBehaviour
             obj = Instantiate(zombiePrefab, transform);
             if (!obj.CompareTag("Zombie"))
             {
-                Debug.LogWarning($"ObjectPooler: Instantiated zombie does not have 'Zombie' tag. Assigning now.");
                 obj.tag = "Zombie";
             }
             var agent = obj.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -115,7 +110,6 @@ public class ObjectPooler : MonoBehaviour
             obj = Instantiate(bulletPrefab, transform);
             if (!obj.CompareTag("Bullet"))
             {
-                Debug.LogWarning($"ObjectPooler: Instantiated bullet does not have 'Bullet' tag. Assigning now.");
                 obj.tag = "Bullet";
             }
         }

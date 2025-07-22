@@ -33,7 +33,6 @@ public class PowerUpManager : MonoBehaviour
     {
         if (spawnPoints == null || spawnPoints.Length == 0 || powerUpPrefabs == null || powerUpPrefabs.Length == 0)
         {
-            Debug.LogWarning("PowerUpManager: No spawn points or power-up prefabs assigned!");
             return;
         }
         int spawnIndex = Random.Range(0, spawnPoints.Length);

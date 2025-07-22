@@ -19,7 +19,6 @@ public class PlayerHealthController : MonoBehaviour
     private void OnPlayerDeath()
     {
         // Dummy: Destroy player object (replace with game over logic/UI as needed)
-        Debug.Log("Player died!");
         Destroy(gameObject);
     }
 }

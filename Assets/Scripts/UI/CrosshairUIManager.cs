@@ -15,7 +15,6 @@ public class CrosshairUIManager : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (crosshairImage == null)
         {
-            Debug.LogError("CrosshairUIManager: Crosshair Image not assigned!");
             enabled = false;
         }
         if (shootButton != null)
@@ -53,30 +52,18 @@ public class CrosshairUIManager : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("CrosshairUIManager: Pointer Down - Attempting to start shooting");
         if (shootManager != null)
         {
-            Debug.Log("CrosshairUIManager: shootManager is assigned, calling StartShooting()");
             shootManager.StartShooting();
-        }
-        else
-        {
-            Debug.LogWarning("CrosshairUIManager: shootManager is NOT assigned!");
         }
         SetVisible(true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("CrosshairUIManager: Pointer Up - Attempting to stop shooting");
         if (shootManager != null)
         {
-            Debug.Log("CrosshairUIManager: shootManager is assigned, calling StopShooting()");
             shootManager.StopShooting();
-        }
-        else
-        {
-            Debug.LogWarning("CrosshairUIManager: shootManager is NOT assigned!");
         }
         SetVisible(false); // Optionally hide crosshair when not shooting
     }

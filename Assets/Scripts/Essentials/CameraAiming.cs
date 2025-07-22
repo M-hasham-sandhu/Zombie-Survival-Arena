@@ -30,7 +30,6 @@ public class CameraAiming : MonoBehaviour
     {
         if (virtualCamera == null)
         {
-            Debug.LogError("CameraAiming: CinemachineVirtualCamera reference not set!");
             enabled = false;
             return;
         }

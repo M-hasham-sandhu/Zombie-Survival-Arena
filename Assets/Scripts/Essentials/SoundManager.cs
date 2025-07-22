@@ -64,10 +64,6 @@ public class SoundManager : MonoBehaviour
         {
             sfxSource.PlayOneShot(s.clip, s.volume);
         }
-        else
-        {
-            Debug.LogWarning($"SFX '{name}' not found!");
-        }
     }
 
     /// <summary>
@@ -81,10 +77,6 @@ public class SoundManager : MonoBehaviour
             musicSource.volume = m.volume;
             musicSource.loop = m.loop;
             musicSource.Play();
-        }
-        else
-        {
-            Debug.LogWarning($"Music '{name}' not found!");
         }
     }
 

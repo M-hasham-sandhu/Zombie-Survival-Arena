@@ -1,6 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum ZombieState
+{
+    Idle,
+    Chase,
+    Attack,
+    Die
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class ZombieMovement : MonoBehaviour
 {
@@ -15,6 +23,11 @@ public class ZombieMovement : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2f;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    public ZombieState currentState = ZombieState.Idle;
+
     private void Reset()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -24,10 +37,28 @@ public class ZombieMovement : MonoBehaviour
     {
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        switch (currentState)
+        {
+            case ZombieState.Idle:
+                // TODO: Trigger idle animation
+                break;
+            case ZombieState.Chase:
+                // TODO: Trigger chase animation
+                break;
+            case ZombieState.Attack:
+                // TODO: Trigger attack animation
+                break;
+            case ZombieState.Die:
+                // TODO: Trigger die animation
+                break;
+        }
         DetectPlayer();
         HandleMovement();
     }
