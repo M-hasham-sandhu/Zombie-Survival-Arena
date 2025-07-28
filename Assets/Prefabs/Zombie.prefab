@@ -1966,7 +1966,7 @@ Animator:
   m_GameObject: {fileID: 7002841808745144333}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1678a3ff5bb79564abc1a8e491588ba0, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4da0e7ccf83b7df4eaf1c93b5eb89b18, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2068,6 +2068,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackRange: 2
+  animator: {fileID: 0}
+  deathDuration: 3
+  currentState: 0
 --- !u!114 &-7108171324236295059
 MonoBehaviour:
   m_ObjectHideFlags: 0
