@@ -2067,7 +2067,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackRange: 2
+  attackRange: 1.5
+  attackDamage: 10
+  attackCooldown: 1
   animator: {fileID: 0}
   deathDuration: 3
   currentState: 0

@@ -22,6 +22,9 @@ public class ZombieMovement : MonoBehaviour
 
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float attackDamage = 10f;
+    [SerializeField] private float attackCooldown = 1f;
+    private float nextAttackTime = 0f;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -133,6 +136,26 @@ public class ZombieMovement : MonoBehaviour
     private void PlayAttackAnimation()
     {
         animator.SetTrigger(ATTACK_TRIGGER);
+
+        // Try to damage the player when attacking
+        if (target != null)
+        {
+            var playerHealth = target.GetComponent<PlayerHealthController>();
+            if (playerHealth != null && playerHealth.HealthManager != null)
+            {
+                playerHealth.HealthManager.TakeDamage(10f);
+                Debug.Log("Dealing Damage to Player: 10");
+            }
+            else
+            {
+                Debug.Log("PlayerHealthController or HealthManager not found on target.");
+            }
+
+        }
+        else
+        {
+            Debug.LogWarning("Target is null, cannot attack.");
+        }
     }
 
     private void PlayDieAnimation()
@@ -232,18 +255,28 @@ public class ZombieMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (target != null && currentState == ZombieState.Chase)
+        if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
-            if (distance > attackRange)
+            
+            // Handle both Chase and Attack states
+            if (currentState == ZombieState.Chase || currentState == ZombieState.Attack)
             {
-                agent.isStopped = false;
-                agent.SetDestination(target.position);
-            }
-            else
-            {
-                agent.isStopped = true;
-                currentState = ZombieState.Attack;
+                if (distance > attackRange)
+                {
+                    // Resume chasing if player moves away during attack
+                    if (currentState == ZombieState.Attack)
+                    {
+                        currentState = ZombieState.Chase;
+                    }
+                    agent.isStopped = false;
+                    agent.SetDestination(target.position);
+                }
+                else
+                {
+                    agent.isStopped = true;
+                    currentState = ZombieState.Attack;
+                }
             }
         }
         else

@@ -85,9 +85,6 @@ public class CharacterMovement : MonoBehaviour
         return Physics.SphereCast(rayOrigin, sphereRadius, transform.forward, out RaycastHit hit, castDistance, nonWalkableLayer);
     }
 
-    /// <summary>
-    /// Rotates the player to face the camera's Y direction (used for camera aiming alignment).
-    /// </summary>
     public void AlignToCameraY(Transform cameraTransform, float alignSpeed = 720f)
     {
         if (cameraTransform == null) return;
