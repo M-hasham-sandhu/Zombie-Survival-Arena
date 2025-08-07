@@ -28,7 +28,6 @@ public class ZombieMovement : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
-    private bool isCrawler = false; // Randomly assigned - some zombies only crawl
 
     [Header("Death Settings")]
     [SerializeField] private float deathDuration = 3f; // How long to stay in death state
@@ -40,7 +39,6 @@ public class ZombieMovement : MonoBehaviour
 
     // Animation parameter names
     private const string WALK_TRIGGER = "Walk";
-    private const string CRAWL_TRIGGER = "Crawl";
     private const string DIE_TRIGGER = "Die";
     private const string ATTACK_TRIGGER = "Attack";
 
@@ -56,15 +54,6 @@ public class ZombieMovement : MonoBehaviour
 
         if (animator == null)
             animator = GetComponent<Animator>();
-
-        // Randomly assign whether this zombie walks or crawls
-        isCrawler = Random.Range(0, 2) == 1; // 50% chance to be a crawler
-        
-        // Adjust NavMeshAgent properties for crawling zombies
-        if (isCrawler)
-        {
-            AdjustForCrawling();
-        }
     }
 
     private ZombieState previousState = ZombieState.Idle;
@@ -123,14 +112,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void PlayMovementAnimation()
     {
-        if (isCrawler)
-        {
-            animator.SetTrigger(CRAWL_TRIGGER);
-        }
-        else
-        {
-            animator.SetTrigger(WALK_TRIGGER);
-        }
+        animator.SetTrigger(WALK_TRIGGER);
     }
 
     private void PlayAttackAnimation()
@@ -169,7 +151,6 @@ public class ZombieMovement : MonoBehaviour
     {
         // Reset all triggers to return to idle state
         animator.ResetTrigger(WALK_TRIGGER);
-        animator.ResetTrigger(CRAWL_TRIGGER);
         animator.ResetTrigger(ATTACK_TRIGGER);
         animator.ResetTrigger(DIE_TRIGGER);
     }
@@ -178,31 +159,6 @@ public class ZombieMovement : MonoBehaviour
     {
         // Only reset movement triggers, not attack or die
         animator.ResetTrigger(WALK_TRIGGER);
-        animator.ResetTrigger(CRAWL_TRIGGER);
-    }
-
-    private void AdjustForCrawling()
-    {
-        if (agent != null)
-        {
-            // Reduce height for crawling zombies
-            agent.height = 0.5f; // Adjust this value based on your zombie model
-            agent.baseOffset = 0.25f; // Adjust this to keep zombie close to ground
-            agent.radius = 0.3f; // Smaller radius for crawling
-            agent.speed = 2f; // Slower speed for crawling zombies
-        }
-    }
-
-    private void AdjustForWalking()
-    {
-        if (agent != null)
-        {
-            // Reset to normal walking values
-            agent.height = 2f; // Adjust this value based on your zombie model
-            agent.baseOffset = 1f; // Normal height offset
-            agent.radius = 0.5f; // Normal radius
-            agent.speed = 3.5f; // Normal walking speed
-        }
     }
 
     private void DetectPlayer()
@@ -232,19 +188,6 @@ public class ZombieMovement : MonoBehaviour
         if (target != null && currentState == ZombieState.Idle)
         {
             currentState = ZombieState.Chase;
-        }
-    }
-
-    public void SetCrawler(bool crawler)
-    {
-        isCrawler = crawler;
-        if (isCrawler)
-        {
-            AdjustForCrawling();
-        }
-        else
-        {
-            AdjustForWalking();
         }
     }
 
