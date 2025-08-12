@@ -315,6 +315,7 @@ MonoBehaviour:
   bulletSpeed: 100
   bulletTTL: 2
   bulletDamage: 50
+  characterMovement: {fileID: 0}
 --- !u!4 &8037275
 Transform:
   m_ObjectHideFlags: 0
@@ -5558,6 +5559,11 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1931154858873185652, guid: 3f374699b23561f4c8aa22cb4bdd3750, type: 3}
   m_PrefabInstance: {fileID: 951931777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &345501724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+  m_PrefabInstance: {fileID: 8469608160872434274}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &345922038 stripped
 GameObject:
@@ -28375,11 +28381,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019750267248f9541b0d30ad656ee3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDelay: 0
-  timeBetweenWaves: 60
+  initialDelay: 30
+  timeBetweenWaves: 30
   timeBetweenSpawns: 1
   baseZombiesPerWave: 3
   zombiesPerWaveIncrement: 2
+  totalWaves: 10
   spawnPoints:
   - {fileID: 1868323035}
   - {fileID: 1859477775}
@@ -39621,10 +39628,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455270323028029171, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 254152444}
+    - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 345501724}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

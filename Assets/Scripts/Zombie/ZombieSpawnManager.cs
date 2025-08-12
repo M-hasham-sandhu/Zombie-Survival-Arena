@@ -14,6 +14,8 @@ public class ZombieSpawnManager : MonoBehaviour
     public int baseZombiesPerWave = 3;
     [Tooltip("How many more zombies to add each wave.")]
     public int zombiesPerWaveIncrement = 2;
+    [Tooltip("Total number of waves before game ends. Set to -1 for infinite waves.")]
+    public int totalWaves = 10;
 
     [Header("Spawn Points")]
     public List<Transform> spawnPoints;
@@ -24,6 +26,12 @@ public class ZombieSpawnManager : MonoBehaviour
 
 
     private int currentWave = 0;
+    private int activeZombiesCount = 0; // Track active zombies
+    
+    // Add new event for game completion
+    public System.Action onGameComplete;
+    public System.Action<int> onWaveStart; // Event for wave start
+    public System.Action<int> onWaveComplete; // Event for wave completion
 
     private void Start()
     {
@@ -60,7 +68,25 @@ public class ZombieSpawnManager : MonoBehaviour
             {
             }
         }
+        
+        // Subscribe to zombie death/return events
+        foreach (var zombie in FindObjectsOfType<ZombieMovement>())
+        {
+            zombie.onZombieReturn += OnZombieReturned;
+        }
+        
         StartCoroutine(WaveSpawnerCoroutine());
+    }
+
+    private void OnZombieReturned(GameObject zombie)
+    {
+        activeZombiesCount--;
+        if (activeZombiesCount <= 0)
+        {
+            // All zombies in the wave are defeated
+            Debug.Log($"Wave {currentWave} cleared!");
+            onWaveComplete?.Invoke(currentWave);
+        }
     }
 
     private System.Collections.IEnumerator WaveSpawnerCoroutine()
@@ -69,19 +95,41 @@ public class ZombieSpawnManager : MonoBehaviour
         while (true)
         {
             currentWave++;
+            
+            // Check if we've reached the final wave
+            if (totalWaves > 0 && currentWave > totalWaves)
+            {
+                Debug.Log("All waves complete! Game Over!");
+                onGameComplete?.Invoke();
+                yield break;
+            }
+
             int zombiesThisWave = baseZombiesPerWave + zombiesPerWaveIncrement * (currentWave - 1);
+            Debug.Log($"Starting Wave {currentWave}/{totalWaves} with {zombiesThisWave} zombies");
+            onWaveStart?.Invoke(currentWave);
+            
             yield return StartCoroutine(SpawnWave(zombiesThisWave));
-            Debug.Log($"Wave {currentWave} complete. Next wave in {timeBetweenWaves} seconds.");
+            
+            // Wait until all zombies are defeated
+            while (activeZombiesCount > 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            
+            Debug.Log($"Wave {currentWave}/{totalWaves} complete. Next wave in {timeBetweenWaves} seconds.");
+            
             if (PowerUpManager.Instance != null)
             {
                 PowerUpManager.Instance.SpawnPowerUpsForWave();
             }
+            
             yield return new WaitForSeconds(timeBetweenWaves);
         }
     }
 
     private System.Collections.IEnumerator SpawnWave(int count)
     {
+        activeZombiesCount = count; // Reset counter for new wave
         for (int i = 0; i < count; i++)
         {
             SpawnZombie();
@@ -108,6 +156,7 @@ public class ZombieSpawnManager : MonoBehaviour
         if (zombieMovement != null && player != null)
         {
             zombieMovement.SetTarget(player);
+            zombieMovement.onZombieReturn += OnZombieReturned; // Subscribe to return event
         }
     }
 

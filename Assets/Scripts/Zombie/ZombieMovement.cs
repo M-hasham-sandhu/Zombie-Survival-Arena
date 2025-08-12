@@ -233,4 +233,14 @@ public class ZombieMovement : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
+
+    public System.Action<GameObject> onZombieReturn;
+
+    private void OnDisable()
+    {
+        if (isDead)
+        {
+            onZombieReturn?.Invoke(gameObject);
+        }
+    }
 }

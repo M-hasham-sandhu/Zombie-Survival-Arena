@@ -18,6 +18,12 @@ public class CharacterMovement : MonoBehaviour
     public float rotationSpeed = 120f;
     public float obstacleCheckDistance = 1f;
 
+    [Header("Gun Settings")]
+    [SerializeField] private Transform gunTransform;
+    [SerializeField] private Vector3 gunWalkRotation = new Vector3(220f, 134f, 199.3f);
+    [SerializeField] private Vector3 gunIdleRotation = Vector3.zero; // Default idle rotation
+    [SerializeField] private float gunRotationSpeed = 8f; // Smoothing speed for rotation
+
 
     private void Awake()
     {
@@ -61,6 +67,17 @@ public class CharacterMovement : MonoBehaviour
             isMoving = true;
         }
 
+        // Handle gun rotation
+        if (gunTransform != null)
+        {
+            Vector3 targetRotation = isMoving ? gunWalkRotation : gunIdleRotation;
+            gunTransform.localRotation = Quaternion.Lerp(
+                gunTransform.localRotation,
+                Quaternion.Euler(targetRotation),
+                Time.deltaTime * gunRotationSpeed
+            );
+        }
+
         if (animator != null)
         {
             if (isMoving)
@@ -101,5 +118,23 @@ public class CharacterMovement : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
         Gizmos.DrawRay(rayOrigin, transform.forward * obstacleCheckDistance);
         Gizmos.DrawWireSphere(rayOrigin + transform.forward * obstacleCheckDistance, 0.3f);
+    }
+
+    public void PlayWalkAnimation()
+    {
+        if (animator != null)
+        {
+            animator.ResetTrigger("idle");
+            animator.SetTrigger("walk");
+        }
+    }
+
+    public void PlayIdleAnimation()
+    {
+        if (animator != null)
+        {
+            animator.ResetTrigger("walk");
+            animator.SetTrigger("idle");
+        }
     }
 }
