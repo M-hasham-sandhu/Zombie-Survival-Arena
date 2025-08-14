@@ -14,6 +14,12 @@ public class ShootManager : MonoBehaviour
     private Coroutine shootingCoroutine;
     private bool isAiming = false;
 
+    [Header("Animation")]
+    [SerializeField] private Animator playerAnimator;
+    // Update these to match your Animator parameters exactly
+    private readonly int shootTrigger = Animator.StringToHash("Shooting"); // Changed from "shoot"
+    private readonly int walkingParam = Animator.StringToHash("walk"); // Changed from "walking"
+
     private void Update()
     {
         bool shouldBeAiming = IsPlayerAiming();
@@ -61,6 +67,7 @@ public class ShootManager : MonoBehaviour
     {
         if (shootingCoroutine == null)
         {
+            characterMovement?.SetShootingState(true);
             shootingCoroutine = StartCoroutine(ShootingRoutine());
         }
     }
@@ -69,6 +76,7 @@ public class ShootManager : MonoBehaviour
     {
         if (shootingCoroutine != null)
         {
+            characterMovement?.SetShootingState(false);
             StopCoroutine(shootingCoroutine);
             shootingCoroutine = null;
         }
@@ -85,10 +93,16 @@ public class ShootManager : MonoBehaviour
 
     public void Shoot()
     {
-        if (firePoint == null)
+        if (firePoint == null) return;
+        
+        SoundManager.Instance?.PlaySFX("GunShot");
+
+        // Only trigger shoot animation if player is not walking
+        if (playerAnimator != null && !playerAnimator.GetBool(walkingParam))
         {
-            return;
+            playerAnimator.SetTrigger(shootTrigger);
         }
+        
         Camera cam = Camera.main;
         if (cam == null)
         {
@@ -126,5 +140,13 @@ public class ShootManager : MonoBehaviour
             returner.Init(bulletTTL, bulletDamage);
         }
     }
+
+    private void Start()
+    {
+        // Try to find player animator if not assigned
+        if (playerAnimator == null)
+        {
+            playerAnimator = GetComponentInParent<Animator>();
+        }
+    }
 }
-    

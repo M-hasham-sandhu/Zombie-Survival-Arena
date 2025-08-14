@@ -316,6 +316,7 @@ MonoBehaviour:
   bulletTTL: 2
   bulletDamage: 50
   characterMovement: {fileID: 0}
+  playerAnimator: {fileID: 8469608160872434275}
 --- !u!4 &8037275
 Transform:
   m_ObjectHideFlags: 0
@@ -16312,7 +16313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1028647609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39669,9 +39670,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 254152444}
     - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: shootButton
+      value: 
+      objectReference: {fileID: 1028647610}
+    - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
       propertyPath: gunTransform
       value: 
       objectReference: {fileID: 345501724}
+    - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: gunShootRotation.x
+      value: 224
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: gunShootRotation.y
+      value: -63
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037638773510649992, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+      propertyPath: gunShootRotation.z
+      value: 260
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39680,3 +39697,8 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5954657790794042421}
   m_SourcePrefab: {fileID: 100100000, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+--- !u!95 &8469608160872434275 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1465606561887410385, guid: e61f38098ab72794e89fbaa4a51635e4, type: 3}
+  m_PrefabInstance: {fileID: 8469608160872434274}
+  m_PrefabAsset: {fileID: 0}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Manages all game audio: SFX and music. Singleton for global access.
+/// Supports MP3 audio files which will be automatically converted by Unity.
 /// Use PlaySFX and PlayMusic to trigger sounds by name.
 /// </summary>
 public class SoundManager : MonoBehaviour
@@ -14,20 +15,55 @@ public class SoundManager : MonoBehaviour
     public class Sound
     {
         public string name;
+        [Tooltip("Supports MP3 files")]
         public AudioClip clip;
         [Range(0f, 1f)] public float volume = 1f;
         public bool loop = false;
+
+        public bool IsValid => !string.IsNullOrEmpty(name) && clip != null;
     }
 
     [Header("Sound Library")]
     public Sound[] sfxSounds;
     public Sound[] musicTracks;
+    [SerializeField] private string defaultMusicTrack = "GameMusic"; // Add this line
 
     private Dictionary<string, Sound> sfxDict;
     private Dictionary<string, Sound> musicDict;
 
     private AudioSource sfxSource;
     private AudioSource musicSource;
+
+    private void ValidateAudioClips()
+    {
+        foreach (var sound in sfxSounds)
+        {
+            if (sound.clip == null)
+            {
+                Debug.LogWarning($"Missing audio clip for SFX: {sound.name}");
+                continue;
+            }
+            
+            if (!sound.IsValid)
+            {
+                Debug.LogWarning($"Invalid sound configuration for: {sound.name}");
+            }
+        }
+
+        foreach (var track in musicTracks)
+        {
+            if (track.clip == null)
+            {
+                Debug.LogWarning($"Missing audio clip for music track: {track.name}");
+                continue;
+            }
+
+            if (!track.IsValid)
+            {
+                Debug.LogWarning($"Invalid music configuration for: {track.name}");
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -40,19 +76,39 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Setup audio sources
+        // Validate audio clips
+        ValidateAudioClips();
+
+        // Setup audio sources with optimal settings for MP3
         sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.playOnAwake = false;
+        
         musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.playOnAwake = false;
         musicSource.loop = true;
+        musicSource.priority = 0; // Highest priority for music
 
         // Build lookup dictionaries
         sfxDict = new Dictionary<string, Sound>();
         foreach (var s in sfxSounds)
-            if (!string.IsNullOrEmpty(s.name)) sfxDict[s.name] = s;
+        {
+            if (s.IsValid) sfxDict[s.name] = s;
+        }
 
         musicDict = new Dictionary<string, Sound>();
         foreach (var m in musicTracks)
-            if (!string.IsNullOrEmpty(m.name)) musicDict[m.name] = m;
+        {
+            if (m.IsValid) musicDict[m.name] = m;
+        }
+    }
+
+    private void Start()
+    {
+        // Start playing the default background music
+        if (!string.IsNullOrEmpty(defaultMusicTrack))
+        {
+            PlayMusic(defaultMusicTrack);
+        }
     }
 
     /// <summary>
@@ -81,11 +137,25 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Stop all sound effects.
+    /// </summary>
+    public void StopAllSFX()
+    {
+        if (sfxSource != null)
+        {
+            sfxSource.Stop();
+        }
+    }
+
+    /// <summary>
     /// Stop the current music.
     /// </summary>
     public void StopMusic()
     {
-        musicSource.Stop();
+        if (musicSource != null)
+        {
+            musicSource.Stop();
+        }
     }
 
     /// <summary>

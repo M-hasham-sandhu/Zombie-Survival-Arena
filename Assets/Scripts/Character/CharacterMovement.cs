@@ -21,8 +21,14 @@ public class CharacterMovement : MonoBehaviour
     [Header("Gun Settings")]
     [SerializeField] private Transform gunTransform;
     [SerializeField] private Vector3 gunWalkRotation = new Vector3(220f, 134f, 199.3f);
-    [SerializeField] private Vector3 gunIdleRotation = Vector3.zero; // Default idle rotation
+    [SerializeField] private Vector3 gunIdleRotation = Vector3.zero;
+    [SerializeField] private Vector3 gunShootRotation = new Vector3(224.13f, -62.67999f, 259.022f); // Adjust these values
     [SerializeField] private float gunRotationSpeed = 8f; // Smoothing speed for rotation
+
+    [Header("UI References")]
+    [SerializeField] private UnityEngine.UI.Button shootButton; // Add this at the top with other serialized fields
+
+    private bool isShooting = false;
 
 
     private void Awake()
@@ -67,10 +73,25 @@ public class CharacterMovement : MonoBehaviour
             isMoving = true;
         }
 
+        // Update shoot button visibility based on movement
+        if (shootButton != null)
+        {
+            shootButton.gameObject.SetActive(isMoving);
+        }
+
         // Handle gun rotation
         if (gunTransform != null)
         {
-            Vector3 targetRotation = isMoving ? gunWalkRotation : gunIdleRotation;
+            Vector3 targetRotation;
+            if (isShooting)
+            {
+                targetRotation = gunShootRotation;
+            }
+            else
+            {
+                targetRotation = isMoving ? gunWalkRotation : gunIdleRotation;
+            }
+
             gunTransform.localRotation = Quaternion.Lerp(
                 gunTransform.localRotation,
                 Quaternion.Euler(targetRotation),
@@ -136,5 +157,11 @@ public class CharacterMovement : MonoBehaviour
             animator.ResetTrigger("walk");
             animator.SetTrigger("idle");
         }
+    }
+
+    // Add this method to be called from ShootManager
+    public void SetShootingState(bool shooting)
+    {
+        isShooting = shooting;
     }
 }

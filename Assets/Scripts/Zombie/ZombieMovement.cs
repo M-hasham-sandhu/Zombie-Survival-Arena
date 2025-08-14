@@ -113,11 +113,13 @@ public class ZombieMovement : MonoBehaviour
     private void PlayMovementAnimation()
     {
         animator.SetTrigger(WALK_TRIGGER);
+        SoundManager.Instance?.PlaySFX("ZombieWalk");
     }
 
     private void PlayAttackAnimation()
     {
         animator.SetTrigger(ATTACK_TRIGGER);
+        SoundManager.Instance?.PlaySFX("ZombieAttack");
 
         // Try to damage the player when attacking
         if (target != null)
@@ -143,6 +145,7 @@ public class ZombieMovement : MonoBehaviour
     private void PlayDieAnimation()
     {
         animator.SetTrigger(DIE_TRIGGER);
+        //SoundManager.Instance?.PlaySFX("ZombieDeath");
         isDead = true;
         deathTimer = 0f;
     }

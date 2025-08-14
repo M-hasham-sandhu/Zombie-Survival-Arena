@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playButton: {fileID: 556502035}
+  _exitButton: {fileID: 0}
 --- !u!4 &310327425
 Transform:
   m_ObjectHideFlags: 0
@@ -303,7 +304,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SETTINGS
+  m_text: 'EXIT
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -330,7 +333,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.25
+  m_fontSize: 72
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -712,7 +715,7 @@ GameObject:
   - component: {fileID: 900230860}
   - component: {fileID: 900230859}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -850,8 +853,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef83bcc3d6e02649b22eac9fe668cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxSounds: []
-  musicTracks: []
+  sfxSounds:
+  - name: ZombieAttack
+    clip: {fileID: 8300000, guid: 9c08ee48b2e02cd4da1c0dd9ed5fc11f, type: 3}
+    volume: 0.201
+    loop: 1
+  - name: ZombieWalk
+    clip: {fileID: 8300000, guid: 8e3009b25de970444bd705b6eff32347, type: 3}
+    volume: 0.181
+    loop: 1
+  - name: GunShot
+    clip: {fileID: 8300000, guid: 2203773368e4340d98c114f55c2dd7fd, type: 3}
+    volume: 0.671
+    loop: 0
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 459f70cc6dcdbe64f853d2b613cfd0a3, type: 3}
+    volume: 0.61
+    loop: 0
+  musicTracks:
+  - name: GameMusic
+    clip: {fileID: 8300000, guid: 360da0993ef8a994fa993b506cddb8ee, type: 3}
+    volume: 0.55
+    loop: 1
+  defaultMusicTrack: GameMusic
 --- !u!4 &906080730
 Transform:
   m_ObjectHideFlags: 0
